@@ -6,18 +6,11 @@ pipeline {
                 git "https://github.com/aesposito123/simple-java-maven-app.git"
             }
         }
-        stage('Checkout') {
-            steps {
-                script {
-                    checkout scm
-                }
-            }
-        }
         stage('Test') {
             steps {
                 script {
-                    def commitAuthor = sh(script: 'git log -1 --pretty=format:%an', returnStdout: true).trim()
-                    echo "Git Commit Author: ${commitAuthor}"
+                    GIT_NAME=$(git --no-pager show -s --format='%an' $GIT_COMMIT)
+                    GIT_EMAIL=$(git --no-pager show -s --format='%ae' $GIT_COMMIT)
                 }
                 bat "mvn test"
             }
@@ -29,6 +22,7 @@ pipeline {
                     archiveArtifacts 'target/*.jar'
                 }
                 unsuccessful {
+                    echo "${GIT_NAME}"
                     emailext body: "Branch: ${GIT_BRANCH} \nCommit: ${GIT_URL}/commit/${GIT_COMMIT}", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'   
                 }
             }
