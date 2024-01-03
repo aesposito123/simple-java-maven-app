@@ -21,7 +21,8 @@ pipeline {
                     script {
                         def commitAuthor = powershell(script: 'git log -1 --pretty=format:%an', returnStdout: true).trim()
                         echo "${commitAuthor}"
-                        emailext body: "Branch: ${commitAuthor} \nCommit: ${GIT_URL}/commit/${GIT_COMMIT}", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'
+                        bat 'set'
+                        emailext body: "Author: ${commitAuthor} \nCommit: ${GIT_URL}/commit/${GIT_COMMIT}", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'
                     }
                 }
             }
