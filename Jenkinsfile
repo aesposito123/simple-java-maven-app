@@ -6,8 +6,19 @@ pipeline {
                 git "https://github.com/aesposito123/simple-java-maven-app.git"
             }
         }
+        stage('Checkout') {
+            steps {
+                script {
+                    checkout scm
+                }
+            }
+        }
         stage('Test') {
             steps {
+                script {
+                    def commitAuthor = sh(script: 'git log -1 --pretty=format:%an', returnStdout: true).trim()
+                    echo "Git Commit Author: ${commitAuthor}"
+                }
                 bat "mvn test"
             }
             post {
