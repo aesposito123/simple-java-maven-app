@@ -7,11 +7,9 @@ pipeline {
             }
         }
         stage('Test') {
-            steps {
-                script {
-                    GIT_NAME=$(git --no-pager show -s --format='%an' $GIT_COMMIT)
-                    GIT_EMAIL=$(git --no-pager show -s --format='%ae' $GIT_COMMIT)
-                }
+            steps {        
+                bat "GIT_NAME=$(git --no-pager show -s --format=\'%an\' $GIT_COMMIT)"
+                bat "GIT_EMAIL=$(git --no-pager show -s --format=\'%ae\' $GIT_COMMIT)"
                 bat "mvn test"
             }
             post {
