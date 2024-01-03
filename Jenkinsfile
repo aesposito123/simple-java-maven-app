@@ -11,8 +11,6 @@ pipeline {
                 powershell "mvn test"
             }
             post {
-                // If Maven was able to run the tests, even if some of the test
-                // failed, record the test results and archive the jar file.
                 success {
                     junit '**/target/surefire-reports/TEST-*.xml'
                     archiveArtifacts 'target/*.jar'
@@ -20,9 +18,7 @@ pipeline {
                 unsuccessful {
                     script {
                         def commitAuthor = powershell(script: 'git log -1 --pretty=format:%an', returnStdout: true).trim()
-                        echo "${commitAuthor}"
-                        bat 'set'
-                        emailext body: "Author: ${commitAuthor} \nCommit: ${GIT_URL}/commit/${GIT_COMMIT}", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'
+                        emailext body: "Author: ${commitAuthor} \nProject Revenova/tmsMain \nBranch: ${GIT_BRANCH} \nCommit: ${GIT_URL}/commit/${GIT_COMMIT}", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'
                     }
                 }
             }
