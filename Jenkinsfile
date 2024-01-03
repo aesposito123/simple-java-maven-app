@@ -19,7 +19,8 @@ pipeline {
                 }
                 unsuccessful {
                     script {
-                        def commitAuthor = powershell 'git --no-pager show -s --format=\\\'%an\\\' $GIT_COMMIT'
+                        commitAuthor = powershell 'git --no-pager show -s --format=\\\'%an\\\' $GIT_COMMIT'
+                        echo "${commitAuthor}"
                         emailext body: "Branch: ${commitAuthor} \nCommit: ${GIT_URL}/commit/${GIT_COMMIT}", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'
                     }
                 }
