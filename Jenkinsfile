@@ -22,8 +22,7 @@ pipeline {
                     archiveArtifacts 'target/*.jar'
                 }
                 unsuccessful {
-                    echo "${GIT_NAME}"
-                    emailext body: "Branch: ${GIT_BRANCH} \nCommit: ${GIT_URL}/commit/${GIT_COMMIT}", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'   
+                    emailext body: "Branch: ${commitAuthor} \nCommit: ${GIT_URL}/commit/${GIT_COMMIT}", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'   
                 }
             }
         }
