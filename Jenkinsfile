@@ -9,7 +9,7 @@ pipeline {
         stage('Test') {
             steps {        
                 script {
-                    GIT_COMMITTER_NAME = $(powershell 'git --no-pager show -s --format=\\\'%an\\\' $GIT_COMMIT')
+                    GIT_COMMITTER_NAME = powershell 'git --no-pager show -s --format=\\\'%an\\\' $GIT_COMMIT'
                     echo "Git Commit Author: ${GIT_COMMITTER_NAME}"
                 }
                 bat "mvn test"
