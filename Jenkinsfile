@@ -10,7 +10,7 @@ pipeline {
             steps {        
                 script {
                     GIT_COMMITTER_NAME = bat(script: 'git log -1 --pretty=format:%an', returnStdout: true).trim()
-                    echo "Git Commit Author: ${commitAuthor}"
+                    echo "Git Commit Author: ${GIT_COMMITTER_NAME}"
                 }
                 bat "mvn test"
             }
@@ -22,7 +22,7 @@ pipeline {
                     archiveArtifacts 'target/*.jar'
                 }
                 unsuccessful {
-                    emailext body: "Branch: ${commitAuthor} \nCommit: ${GIT_URL}/commit/${GIT_COMMIT}", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'   
+                    emailext body: "Branch: ${GIT_COMMITTER_NAME} \nCommit: ${GIT_URL}/commit/${GIT_COMMIT}", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'   
                 }
             }
         }
