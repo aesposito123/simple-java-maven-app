@@ -18,8 +18,8 @@ pipeline {
                     archiveArtifacts 'target/*.jar'
                 }
                 unsuccessful {
-                    echo ${BUILD_TAG}
-                    echo ${GIT_COMMIT}
+                    echo "${BUILD_TAG}"
+                    echo "${GIT_COMMIT}"
                     script {
                         def commitHash = checkout(scm).GIT_COMMIT
                     }
