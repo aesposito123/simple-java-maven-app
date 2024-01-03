@@ -20,11 +20,8 @@ pipeline {
                 unsuccessful {
                     echo "${BUILD_TAG}"
                     echo "${GIT_COMMIT}"
-                    script {
-                        def commitHash = checkout(scm).GIT_COMMIT
-                    }
-                    echo commitHash
-                    emailext body: "Branch: ${commitHash} \n\nYou Failed Friendo", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'   
+                    echo "${CHANGE_AUTHOR}"
+                    emailext body: "Branch: ${CHANGE_AUTHOR} \n\nYou Failed Friendo", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'   
                 }
             }
         }
