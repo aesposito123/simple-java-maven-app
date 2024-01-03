@@ -20,8 +20,7 @@ pipeline {
                 unsuccessful {
                     echo "${BUILD_TAG}"
                     echo "${GIT_COMMIT}"
-                    echo "${CHANGE_AUTHOR}"
-                    emailext body: "Branch: ${CHANGE_AUTHOR} \n\nYou Failed Friendo", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'   
+                    emailext body: "Branch: ${GIT_COMMIT} \n\nYou Failed Friendo", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'   
                 }
             }
         }
