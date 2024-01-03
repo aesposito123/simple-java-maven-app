@@ -8,8 +8,8 @@ pipeline {
         }
         stage('Test') {
             steps {        
-                bat "GIT_NAME=$(git --no-pager show -s --format=\'%an\' $GIT_COMMIT)"
-                bat "GIT_EMAIL=$(git --no-pager show -s --format=\'%ae\' $GIT_COMMIT)"
+                def commitAuthor = bat(script: 'git log -1 --pretty=format:%an', returnStdout: true).trim()
+                echo "Git Commit Author: ${commitAuthor}"
                 bat "mvn test"
             }
             post {
