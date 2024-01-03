@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        GIT_COMMIT_AUTHOR = ''
-    }
     stages {
         stage('Clone') {
             steps {
@@ -11,10 +8,6 @@ pipeline {
         }
         stage('Test') {
             steps {        
-                script {
-                    GIT_COMMIT_AUTHOR = powershell 'git --no-pager show -s --format=\\\'%an\\\' $GIT_COMMIT'
-                    echo "Git Commit Author: GIT_COMMIT_AUTHOR"
-                }
                 bat "mvn test"
             }
             post {
@@ -25,7 +18,10 @@ pipeline {
                     archiveArtifacts 'target/*.jar'
                 }
                 unsuccessful {
-                    emailext body: "Branch: ${GIT_COMMIT_AUTHOR} \nCommit: ${GIT_URL}/commit/${GIT_COMMIT}", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'   
+                    script {
+                        def commitAuthor = powershell 'git --no-pager show -s --format=\\\'%an\\\' $GIT_COMMIT'
+                        emailext body: "Branch: ${commitAuthor} \nCommit: ${GIT_URL}/commit/${GIT_COMMIT}", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'
+                    }
                 }
             }
         }
