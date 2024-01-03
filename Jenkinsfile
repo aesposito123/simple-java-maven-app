@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Test') {
             steps {        
-                bat "mvn test"
+                powershell "mvn test"
             }
             post {
                 // If Maven was able to run the tests, even if some of the test
