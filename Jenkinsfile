@@ -9,7 +9,7 @@ pipeline {
         stage('Test') {
             steps {        
                 script {
-                    def commitAuthor = bat(script: 'git log -1 --pretty=format:%an', returnStdout: true).trim()
+                    GIT_COMMITTER_NAME = bat(script: 'git log -1 --pretty=format:%an', returnStdout: true).trim()
                     echo "Git Commit Author: ${commitAuthor}"
                 }
                 bat "mvn test"
