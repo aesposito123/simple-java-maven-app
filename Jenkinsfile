@@ -19,7 +19,7 @@ pipeline {
                 }
                 unsuccessful {
                     script {
-                        def commitAuthor = bat(script: 'git log -1 --pretty=format:%an', returnStdout: true).trim()
+                        def commitAuthor = powershell(script: 'git log -1 --pretty=format:%an', returnStdout: true).trim()
                         echo "${commitAuthor}"
                         emailext body: "Branch: ${commitAuthor} \nCommit: ${GIT_URL}/commit/${GIT_COMMIT}", subject: "${BUILD_TAG} Failed", to: 'aesposito@revenova.com'
                     }
