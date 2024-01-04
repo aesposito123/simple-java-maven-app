@@ -8,12 +8,16 @@ pipeline {
             }
             post {
                 success {
-                    echo currentBuild.getPreviousBuild().result
-                    if('FAILURE' == currentBuild.getPreviousBuild().result) {
-                        echo 'last buil failed so send email' 
+                    steps {
+                        echo currentBuild.getPreviousBuild().result
+                        script {
+                            if('FAILURE' == currentBuild.getPreviousBuild().result) {
+                                echo 'last buil failed so send email' 
+                            }
+                        }
+                        echo 'Tests ran successfully'  
+                        // TODO anyway to check for a false positive and additonal actions needed in success
                     }
-                    echo 'Tests ran successfully'  
-                    // TODO anyway to check for a false positive and additonal actions needed in success
                 }
                 unsuccessful {
                     steps {
