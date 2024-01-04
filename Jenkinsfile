@@ -12,7 +12,7 @@ pipeline {
             }
             post {
                 success {
-                    // TODO how should success be handled 
+                    cleanWs cleanWhenAborted: false, cleanWhenFailure: false, cleanWhenNotBuilt: false, cleanWhenUnstable: false                
                 }
                 unsuccessful {
                     script {
