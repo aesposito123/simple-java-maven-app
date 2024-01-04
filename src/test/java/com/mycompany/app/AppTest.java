@@ -23,11 +23,10 @@ public class AppTest
         assertEquals("Hello World!", app.getMessage());
     }
 
-    /*
     @Test
     public void failingTest()
     {
         App app = new App();
         assertEquals("The test passed!", app.getMessage());
-    }*/
+    }
 }
