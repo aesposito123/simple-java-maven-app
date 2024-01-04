@@ -8,16 +8,16 @@ pipeline {
             }
             post {
                 success {
-                    steps {
-                        echo currentBuild.getPreviousBuild().result
-                        script {
-                            if('FAILURE' == currentBuild.getPreviousBuild().result) {
-                                echo 'last buil failed so send email' 
-                            }
+                    script {
+                        if('FAILURE' == currentBuild.getPreviousBuild().result) {
+                            echo 'last build failed' 
+                            emailext body: "Previous build failed", 
+                                 subject: "Jenkins ${JOB_BASE_NAME} Build ${BUILD_DISPLAY_NAME} Success",
+                                 to: 'aesposito@revenova.com'
                         }
                         echo 'Tests ran successfully'  
-                        // TODO anyway to check for a false positive and additonal actions needed in success
                     }
+                    // TODO anyway to check for a false positive and additonal actions needed in success
                 }
                 unsuccessful {
                     script {
