@@ -27,6 +27,6 @@ public class AppTest
     public void failingTest()
     {
         App app = new App();
-       // assertEquals("The test passed!", app.getMessage());
+        assertEquals("The test passed!", app.getMessage());
     }
 }
