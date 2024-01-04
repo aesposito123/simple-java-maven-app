@@ -2,11 +2,6 @@ pipeline {
     // TODO investigate if we need agents
     agent any
     stages {
-        stage('Clone') {
-            steps {
-                git "https://github.com/aesposito123/simple-java-maven-app.git"
-            }
-        }
         stage('Test') {
             steps {        
                 powershell "mvn test -Punit"
