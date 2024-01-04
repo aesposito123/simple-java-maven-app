@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    // TODO investigate if we need agents
     stages {
         stage('Clone') {
             steps {
@@ -12,7 +13,8 @@ pipeline {
             }
             post {
                 success {
-                    cleanWs cleanWhenAborted: false, cleanWhenFailure: false, cleanWhenNotBuilt: false, cleanWhenUnstable: false                
+                    echo 'Tests ran successfully'  
+                    // TODO anyway to check for a false positive
                 }
                 unsuccessful {
                     script {
