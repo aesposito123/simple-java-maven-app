@@ -8,6 +8,7 @@ pipeline {
             }
             post {
                 success {
+                    echo currentBuild.getPreviousBuild().result
                     echo 'Tests ran successfully'  
                     // TODO anyway to check for a false positive and additonal actions needed in success
                 }
