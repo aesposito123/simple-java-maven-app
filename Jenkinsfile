@@ -4,12 +4,15 @@ pipeline {
     stages {
         stage('Execute Python') {
             steps {
-                powershell 'cd Python; python testScript.py'
+                def pythonResult = powershell 'cd Python; python testScript.py'
+                if(pythonResult == 0) {
+                    echo 'Python Script Failed!' 
+                }
             }
         }    
         stage('Test') {
             steps {        
-                powershell "mvn test -Punit"
+                def pythonResult = powershell "mvn test -Punit"
             }
             post {
                 success {
