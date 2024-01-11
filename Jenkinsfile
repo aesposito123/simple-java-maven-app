@@ -5,9 +5,7 @@ pipeline {
         stage('Execute Python') {
             steps {
                 script {
-                    //def result = bat(script: 'python myscript.py', returnStatus: true, returnStdout: true)                    
                     def pythonResult = powershell(script: 'cd Python; python testScript.py', , returnStatus: true, returnStdout: true)
-                    echo pythonResult
                     if(pythonResult == 0) {
                         echo 'Python Script Failed!' 
                     }
