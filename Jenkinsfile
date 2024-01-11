@@ -2,6 +2,11 @@ pipeline {
     // TODO investigate if we need agents
     agent any
     stages {
+        stage('Execute Python') {
+            steps {
+                powershell 'cd Python; python testScript.py'
+            }
+        }    
         stage('Test') {
             steps {        
                 powershell "mvn test -Punit"
