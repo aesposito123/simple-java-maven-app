@@ -6,6 +6,7 @@ pipeline {
             steps {
                 script {
                     def pythonResult = powershell 'cd Python; python testScript.py'
+                    echo pythonResult
                     if(pythonResult == 0) {
                         echo 'Python Script Failed!' 
                     }
